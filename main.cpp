@@ -32,16 +32,9 @@ void print_deque(deque<Car>);
 
 int main(){
     srand(time(NULL));
-    deque<Car> Toll;
+    //deque<Car> Toll;
     deque<Car> Plaza[LINES]; //array of tollbooths.
     int time = 1;
-/* //DEBUG
-    Plaza[1].push_back(Car());
-    Plaza[3].push_back(Car());
-    Plaza[0].push_back(Car());
-    Plaza[1].push_back(Car());
-    Plaza[2].push_back(Car());
-*/
 
     //initial line
     for(int i=0;i<LINES;i++){              //When the simulation starts, pre-populate the lanes with 2 cars like before. Each time period will now have operations happening on all lines
@@ -49,8 +42,32 @@ int main(){
             Plaza[i].push_back(Car());          //calling default car constructor returns randomized car.
         }
     }
-    
+    cout<<"Initial queue:\n";
     print_plaza(Plaza,LINES);
+
+    for(int time=1;time<SIMULATIONTIME+1;time++){
+        cout<<"Time: "<< time <<endl;
+        for(int i=0;i<LINES;i++){
+            cout<<" Lane: "<<i+1<<"\t";
+            if(rand()%100<50){              //55% probability that the car at the head of the line pays its toll and leaves the toll booth
+                if(Plaza[i].empty()){
+                    continue;
+                }
+                cout<<"Car Paid: ";
+                Plaza[i].front().print();
+                Plaza[i].pop_front();
+            }
+            else{
+                cout<<"Joined lane: ";      //45% probability that another car joins the line for the toll booth
+                Plaza[i].back().print();
+                Plaza[i].push_back(Car());
+            }
+            print_plaza(Plaza,LINES);              //after each simulation, display queue via car's print method
+        }
+    }
+
+
+
 /*
     cout<<"Initial queue:\n";
     print_deque(Toll);     
@@ -68,7 +85,8 @@ int main(){
         }
         print_deque(Toll);              //after each simulation, display queue via car's print method
         time++;
-    }    */
+    }    
+    print_plaza(Plaza,LINES);*/
     return 0;
 }
 
