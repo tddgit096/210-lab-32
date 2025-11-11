@@ -1,3 +1,5 @@
+// Lab 33 | Toma Dimov | COMSC 210 
+
 #include <iostream>
 #include "Car.h"
 #include <deque>
@@ -91,7 +93,7 @@ void print_deque(deque<Car> D){
 }
 
 int find_best_lane(deque<Car>P[],int size,int initial){//returns the lane index with the least cars
-    ////Sort the indices with by lowest values. In case the lowest value is actually our own lane, we want to avoid "switching" to our own lane, so we will store the second lowest index.
+    //In case the lowest traffic lane is actually our own lane, we will want to avoid "switching" to our own lane.
     int MinVal=-1;
     int MinValIndex;
 
@@ -103,7 +105,7 @@ int find_best_lane(deque<Car>P[],int size,int initial){//returns the lane index 
             MinValIndex = i;
         }
     }
-    if(MinValIndex==-1){ //passed a list with 1 value
+    if(MinValIndex==-1){ //this should only happen if someone passed a list with size of 1
         return initial;
     }
     return MinValIndex;
