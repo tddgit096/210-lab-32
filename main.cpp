@@ -40,7 +40,6 @@ int main(){
     }
     cout<<"Initial queue:\n";
     print_plaza(Plaza,LINES);
-
     for(int time=1;time<SIMULATIONTIME+1;time++){
         cout<<"Time: "<< time <<endl;
         for(int i=0;i<LINES;i++){
@@ -51,11 +50,15 @@ int main(){
                     Plaza[i].push_back(Car());
                     Plaza[i].back().print();
                 }
+                else{
+                    cout<<endl;
+                }
                 continue;
             }
             int result = rand()%100;
 
             if(result<PAYPROBABILITY){
+                cout<<"Paid: ";
                 Plaza[i].front().print();
                 Plaza[i].pop_front();
             }
@@ -65,7 +68,11 @@ int main(){
                 Plaza[i].back().print();
             }
             else{
-                cout<<"Switched lane: ";   
+                if(Plaza[i].size()==1){
+                    cout<<endl;
+                    continue;    //it's the only car in the spot, it's last but its also first, it reasonably wouldn't switch.
+                }
+                cout<<"Switched lane: "; 
                 Plaza[i].back().print();
                 Car C = Plaza[i].back();                               //duplicate the car
                 Plaza[i].pop_back();                                    //remove it from the initial list
@@ -74,28 +81,6 @@ int main(){
         }
         print_plaza(Plaza,LINES);                //after each simulation, display queue via car's print method
     }
-
-
-
-/*
-    cout<<"Initial queue:\n";
-    print_deque(Toll);     
-    while(!Toll.empty()){               //run until deque is empty
-        cout<<"Time: "<< time <<" Operation: ";
-        if(rand()%100<55){              //55% probability that the car at the head of the line pays its toll and leaves the toll booth
-            cout<<"Car Paid: ";
-            Toll.front().print();
-            Toll.pop_front();
-        }
-        else{
-            cout<<"Joined lane: ";      //45% probability that another car joins the line for the toll booth
-            Toll.back().print();
-            Toll.push_back(Car());
-        }
-        print_deque(Toll);              //after each simulation, display queue via car's print method
-        time++;
-    }    
-    print_plaza(Plaza,LINES);*/
     return 0;
 }
 
@@ -122,7 +107,7 @@ int find_best_lane(deque<Car>P[],int size,int initial){//returns the lane with t
     int minValue = P[initial].size();
     int minIndex = initial;
     for(int i=0;i<size;i++){
-        if(i=initial)
+        if(i==initial)
             continue;
         if(minValue>P[i].size()){
             minValue=P[i].size();
