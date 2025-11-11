@@ -3,23 +3,7 @@
 #include <deque>
 
 using namespace std;
-/*
-    .
-    Any car at the end of any queue can switch lanes to a random lane that's not their original lane.
 
-    The three possible operations and their probabilities are:
-    46% probability that the car at the head of the queue pays its toll and leaves the queue
-    39% probability that another car joins the queue
-    15% probability that the rear car will shift lanes
-
-
-    Run the simulation for 20 time periods.
-
-    In addition to your 10-minute commits, do an additional commit when reaching these milestones:
-
-    [Milestone 5] Your code supports lane switching and fully exercises the data structures.
-
-    */
 const int INITIALCARS = 2, SIMULATIONTIME = 20, LINES = 4; 
 const int PAYPROBABILITY = 46, JOINPROBABILITY = 39, JOINPROBEMPTY = 50;
 
@@ -29,7 +13,7 @@ int find_best_lane(deque<Car>[],int, int);//returns the lane with the least cars
 
 int main(){
     srand(time(NULL));
-    deque<Car> Plaza[LINES]; //array of tollbooths.
+    deque<Car> Plaza[LINES]; //array of toll-lines.
     int time = 1;
 
     //initial line
@@ -40,6 +24,8 @@ int main(){
     }
     cout<<"Initial queue:\n";
     print_plaza(Plaza,LINES);
+
+    //Begin Simulation
     for(int time=1;time<SIMULATIONTIME+1;time++){
         cout<<"Time: "<< time <<endl;
         for(int i=0;i<LINES;i++){
@@ -55,6 +41,7 @@ int main(){
                 }
                 continue;
             }
+            //store result
             int result = rand()%100;
 
             if(result<PAYPROBABILITY){
@@ -70,25 +57,25 @@ int main(){
             else{
                 if(Plaza[i].size()==1){
                     cout<<endl;
-                    continue;    //it's the only car in the spot, it's last but its also first, it reasonably wouldn't switch.
+                    continue;    //it's the only car in the spot,so technically it's last but it's also first, so reasonably it will wait to be helped.
                 }
                 cout<<"Switched lane: "; 
                 Plaza[i].back().print();
-                Car C = Plaza[i].back();                               //duplicate the car
+                Car C = Plaza[i].back();                               //copy the car
                 Plaza[i].pop_back();                                    //remove it from the initial list
-                Plaza[find_best_lane(Plaza,LINES,i)].push_back(C);    //find the least clogged line, then push it back.
+                Plaza[find_best_lane(Plaza,LINES,i)].push_back(C);    //find the least clogged line, then send it to the back.
             }
         }
-        print_plaza(Plaza,LINES);                //after each simulation, display queue via car's print method
+        print_plaza(Plaza,LINES);                //after each simulation, display the entire structure.
     }
     return 0;
 }
 
 
-void print_plaza(deque<Car> P[],int size){
+void print_plaza(deque<Car> P[],int size){ //prints array of deque<Car>
     for(int i=0;i<size;i++){
         cout<<"Lane: "<<i+1<<endl;
-        print_deque(P[i]);
+        print_deque(P[i]);                  //hands it off to print_deque, for each lane
     }
 }
 
@@ -103,13 +90,15 @@ void print_deque(deque<Car> D){
     }
 }
 
-int find_best_lane(deque<Car>P[],int size,int initial){//returns the lane with the least cars
-    int minValue = P[initial].size();
+int find_best_lane(deque<Car>P[],int size,int initial){//returns the lane index with the least cars
+    int minVals[2]; //Find the 2 indices with the 2 lowest values. Why 2? in case the lowest value is actually our own lane. We want to avoid "switching" to our own lane.
+    int minIndex
+    int minValue = P[initial].size();   //set to initial value to exclude it from our searches (A car shouldn't switch to the same lane it left)
     int minIndex = initial;
     for(int i=0;i<size;i++){
-        if(i==initial)
+        if(i==initial)                  //exclude our own line.
             continue;
-        if(minValue>P[i].size()){
+        if(minValue>P[i].size()){       //check for smaller value
             minValue=P[i].size();
             minIndex = i;
         }
