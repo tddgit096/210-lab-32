@@ -19,10 +19,6 @@ using namespace std;
 
     In addition to your 10-minute commits, do an additional commit when reaching these milestones:
 
-    [Milestone 2] Your code has created the array of deques, and tests operations on this complex data structure to validate it.
-
-    [Milestone 3] Your code populates the plaza with 2 cars before the simulation runs. Output the current deque status per the sample output.
-
     [Milestone 4] Your code features the loop. Inside the loop, only code two probabilities: 50/50 of the car paying/leaving and of the car joining the deque. Your code should fully exercise the data structures.
 
     [Milestone 5] Your code supports lane switching and fully exercises the data structures.
@@ -39,23 +35,23 @@ int main(){
     deque<Car> Toll;
     deque<Car> Plaza[LINES]; //array of tollbooths.
     int time = 1;
-
+/* //DEBUG
     Plaza[1].push_back(Car());
     Plaza[3].push_back(Car());
     Plaza[0].push_back(Car());
     Plaza[1].push_back(Car());
     Plaza[2].push_back(Car());
+*/
 
-    print_plaza(Plaza,LINES);
-
-/*
     //initial line
-    for(deque<Car> C : Plaza){              //When the simulation starts, pre-populate the lanes with 2 cars like before. Each time period will now have operations happening on all lines
-        for(int i=0;i< INITIALCARS;i++){
-            C.push_back(Car());          //calling default car constructor returns randomized car.
+    for(int i=0;i<LINES;i++){              //When the simulation starts, pre-populate the lanes with 2 cars like before. Each time period will now have operations happening on all lines
+        for(int j=0;j< INITIALCARS;j++){
+            Plaza[i].push_back(Car());          //calling default car constructor returns randomized car.
         }
     }
-
+    
+    print_plaza(Plaza,LINES);
+/*
     cout<<"Initial queue:\n";
     print_deque(Toll);     
     while(!Toll.empty()){               //run until deque is empty
