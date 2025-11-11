@@ -19,8 +19,6 @@ using namespace std;
 
     In addition to your 10-minute commits, do an additional commit when reaching these milestones:
 
-    [Milestone 1] You have branched from Lab 32.
-
     [Milestone 2] Your code has created the array of deques, and tests operations on this complex data structure to validate it.
 
     [Milestone 3] Your code populates the plaza with 2 cars before the simulation runs. Output the current deque status per the sample output.
@@ -42,6 +40,15 @@ int main(){
     deque<Car> Plaza[LINES]; //array of tollbooths.
     int time = 1;
 
+    Plaza[1].push_back(Car());
+    Plaza[3].push_back(Car());
+    Plaza[0].push_back(Car());
+    Plaza[1].push_back(Car());
+    Plaza[2].push_back(Car());
+
+    print_plaza(Plaza,LINES);
+
+/*
     //initial line
     for(deque<Car> C : Plaza){              //When the simulation starts, pre-populate the lanes with 2 cars like before. Each time period will now have operations happening on all lines
         for(int i=0;i< INITIALCARS;i++){
@@ -65,21 +72,19 @@ int main(){
         }
         print_deque(Toll);              //after each simulation, display queue via car's print method
         time++;
-    }
+    }    */
     return 0;
 }
 
+
 void print_plaza(deque<Car> D[],int size){
     for(int i=0;i<size;i++){
-        cout<<"Lane"<<i+1<<endl;
-        for(deque<Car>C : D[i]){
-
-        }
+        cout<<"Lane: "<<i+1<<endl;
+        print_deque(D[i]);
     }
 }
 
 void print_deque(deque<Car> D){
-    cout<<"Queue:\n";
     if(D.empty()){
         cout<<"\tEmpty.\n";
         return;
