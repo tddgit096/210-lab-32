@@ -4,10 +4,7 @@
 
 using namespace std;
 /*
-    Add multiple lanes into the management system to simulate an entire plaza of toll booths
-    Add the capability for a car at the rear of a lane to switch lanes
-
-    There are now 4 toll booth lanes at play. Use an array to hold the lanes. The array will be of type deque<Car>. When the simulation starts, pre-populate the lanes with 2 cars like before. Each time period will now have operations happening on all lines.
+    .
     Any car at the end of any queue can switch lanes to a random lane that's not their original lane.
 
     The three possible operations and their probabilities are:
@@ -33,18 +30,25 @@ using namespace std;
     [Milestone 5] Your code supports lane switching and fully exercises the data structures.
 
     */
-const int INITIALCARS = 2, SIMULATIONTIME = 20;
+const int INITIALCARS = 2, SIMULATIONTIME = 20, LINES = 4; 
 const int PAYPROBABILITY = 46, JOINPROBABILITY = 39;
 
+void print_plaza(deque<Car>[],int);
 void print_deque(deque<Car>);
 
 int main(){
     srand(time(NULL));
     deque<Car> Toll;
+    deque<Car> Plaza[LINES]; //array of tollbooths.
     int time = 1;
-    for(int i=0;i< INITIALCARS;i++){
-        Toll.push_back(Car());          //calling default car constructor returns randomized car.
+
+    //initial line
+    for(deque<Car> C : Plaza){              //When the simulation starts, pre-populate the lanes with 2 cars like before. Each time period will now have operations happening on all lines
+        for(int i=0;i< INITIALCARS;i++){
+            C.push_back(Car());          //calling default car constructor returns randomized car.
+        }
     }
+
     cout<<"Initial queue:\n";
     print_deque(Toll);     
     while(!Toll.empty()){               //run until deque is empty
@@ -63,6 +67,15 @@ int main(){
         time++;
     }
     return 0;
+}
+
+void print_plaza(deque<Car> D[],int size){
+    for(int i=0;i<size;i++){
+        cout<<"Lane"<<i+1<<endl;
+        for(deque<Car>C : D[i]){
+
+        }
+    }
 }
 
 void print_deque(deque<Car> D){
