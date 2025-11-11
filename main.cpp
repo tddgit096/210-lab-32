@@ -25,6 +25,7 @@ const int PAYPROBABILITY = 46, JOINPROBABILITY = 39, JOINPROBEMPTY = 50;
 
 void print_plaza(deque<Car>[],int);
 void print_deque(deque<Car>);
+int find_best_lane(deque<Car>[],int);//returns the lane with the least cars
 
 int main(){
     srand(time(NULL));
@@ -49,13 +50,27 @@ int main(){
                     cout<<"Joined lane: ";   
                     Plaza[i].push_back(Car());
                     Plaza[i].back().print();
-                    continue;
                 }
+                continue;
+            }
+            int result = rand()%100;
+
+            if(result<PAYPROBABILITY){
+                Plaza[i].front().print();
+                Plaza[i].pop_front();
+            }
+            else if(result<(JOINPROBABILITY+PAYPROBABILITY)){   
+                cout<<"Joined lane: ";   
+                Plaza[i].push_back(Car());
+                Plaza[i].back().print();
+            }
             else{
-
+                int linesize[LINES];
+                for(int z=0;z<LINES;z++){
+                    linesizePlaza[z].size();
+                }
+                //find the least clogged line.
             }
-            }
-
         }
         print_plaza(Plaza,LINES);              //after each simulation, display queue via car's print method
     }
@@ -85,10 +100,10 @@ int main(){
 }
 
 
-void print_plaza(deque<Car> D[],int size){
+void print_plaza(deque<Car> P[],int size){
     for(int i=0;i<size;i++){
         cout<<"Lane: "<<i+1<<endl;
-        print_deque(D[i]);
+        print_deque(P[i]);
     }
 }
 
@@ -101,4 +116,9 @@ void print_deque(deque<Car> D){
         cout<<"\t";
         c.print();
     }
+}
+
+int find_best_lane(deque<Car>P[],int size){//returns the lane with the least cars
+    for(int i=0;i<)
+
 }
