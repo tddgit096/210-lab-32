@@ -92,19 +92,19 @@ void print_deque(deque<Car> D){
 
 int find_best_lane(deque<Car>P[],int size,int initial){//returns the lane index with the least cars
     ////Sort the indices with by lowest values. In case the lowest value is actually our own lane, we want to avoid "switching" to our own lane, so we will store the second lowest index.
-    int MinVal1=P[initial].size();
-    int MinVal1Index = initial;
+    int MinVal=-1;
+    int MinValIndex;
 
     for(int i=0;i<size;i++){
         if(i==initial)                  //exclude our own line.
             continue;
-        if(MinVal1>P[i].size()){       //check for smaller value
-            MinVal1=P[i].size();
-            MinVal1Index = i;
+        if(MinVal>P[i].size() || MinVal==-1){       //check for smaller value
+            MinVal=P[i].size();
+            MinValIndex = i;
         }
     }
-    if(MinVal1Index!=initial){
-        return MinVal1Index
+    if(MinValIndex==-1){ //passed a list with 1 value
+        return initial;
     }
-
+    return MinValIndex;
 }
