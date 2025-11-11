@@ -12,20 +12,16 @@ using namespace std;
     39% probability that another car joins the queue
     15% probability that the rear car will shift lanes
 
-    All these probability values need to be stored as constants defined in your program, never in hard-coding.
-    If a lane is currently empty but there is still more time in the simulation, those probabilities will be just 50/50 if a new car enters the queue or not. Of course another car might shift lanes into it, but that's a different lane's business.
 
     Run the simulation for 20 time periods.
 
     In addition to your 10-minute commits, do an additional commit when reaching these milestones:
 
-    [Milestone 4] Your code features the loop. Inside the loop, only code two probabilities: 50/50 of the car paying/leaving and of the car joining the deque. Your code should fully exercise the data structures.
-
     [Milestone 5] Your code supports lane switching and fully exercises the data structures.
 
     */
 const int INITIALCARS = 2, SIMULATIONTIME = 20, LINES = 4; 
-const int PAYPROBABILITY = 46, JOINPROBABILITY = 39;
+const int PAYPROBABILITY = 46, JOINPROBABILITY = 39, JOINPROBEMPTY = 50;
 
 void print_plaza(deque<Car>[],int);
 void print_deque(deque<Car>);
@@ -48,20 +44,18 @@ int main(){
         cout<<"Time: "<< time <<endl;
         for(int i=0;i<LINES;i++){
             cout<<"   Lane: "<<i+1<<"\t";
-            if(rand()%100<50){
-                if(Plaza[i].empty()){
-                    cout<<"Nothing.\n";
+            if(Plaza[i].empty()){              //If a lane is currently empty but there is still more time in the simulation, those probabilities will be just 50/50 if a new car enters the queue or not.
+                if(rand()%100<JOINPROBEMPTY){
+                    cout<<"Joined lane: ";   
+                    Plaza[i].push_back(Car());
+                    Plaza[i].back().print();
                     continue;
                 }
-                cout<<"Car Paid: ";
-                Plaza[i].front().print();
-                Plaza[i].pop_front();
-            }
             else{
-                cout<<"Joined lane: ";   
-                Plaza[i].push_back(Car());
-                Plaza[i].back().print();
+
             }
+            }
+
         }
         print_plaza(Plaza,LINES);              //after each simulation, display queue via car's print method
     }
