@@ -91,17 +91,20 @@ void print_deque(deque<Car> D){
 }
 
 int find_best_lane(deque<Car>P[],int size,int initial){//returns the lane index with the least cars
-    int minVals[2]; //Find the 2 indices with the 2 lowest values. Why 2? in case the lowest value is actually our own lane. We want to avoid "switching" to our own lane.
-    int minIndex
-    int minValue = P[initial].size();   //set to initial value to exclude it from our searches (A car shouldn't switch to the same lane it left)
-    int minIndex = initial;
+    ////Sort the indices with by lowest values. In case the lowest value is actually our own lane, we want to avoid "switching" to our own lane, so we will store the second lowest index.
+    int MinVal1=P[initial].size();
+    int MinVal1Index = initial;
+
     for(int i=0;i<size;i++){
         if(i==initial)                  //exclude our own line.
             continue;
-        if(minValue>P[i].size()){       //check for smaller value
-            minValue=P[i].size();
-            minIndex = i;
+        if(MinVal1>P[i].size()){       //check for smaller value
+            MinVal1=P[i].size();
+            MinVal1Index = i;
         }
     }
-    return minIndex;
+    if(MinVal1Index!=initial){
+        return MinVal1Index
+    }
+
 }
