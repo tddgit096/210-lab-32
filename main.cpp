@@ -32,7 +32,6 @@ void print_deque(deque<Car>);
 
 int main(){
     srand(time(NULL));
-    //deque<Car> Toll;
     deque<Car> Plaza[LINES]; //array of tollbooths.
     int time = 1;
 
@@ -48,9 +47,10 @@ int main(){
     for(int time=1;time<SIMULATIONTIME+1;time++){
         cout<<"Time: "<< time <<endl;
         for(int i=0;i<LINES;i++){
-            cout<<" Lane: "<<i+1<<"\t";
-            if(rand()%100<50){              //55% probability that the car at the head of the line pays its toll and leaves the toll booth
+            cout<<"   Lane: "<<i+1<<"\t";
+            if(rand()%100<50){
                 if(Plaza[i].empty()){
+                    cout<<"Nothing.\n";
                     continue;
                 }
                 cout<<"Car Paid: ";
@@ -58,12 +58,12 @@ int main(){
                 Plaza[i].pop_front();
             }
             else{
-                cout<<"Joined lane: ";      //45% probability that another car joins the line for the toll booth
-                Plaza[i].back().print();
+                cout<<"Joined lane: ";   
                 Plaza[i].push_back(Car());
+                Plaza[i].back().print();
             }
-            print_plaza(Plaza,LINES);              //after each simulation, display queue via car's print method
         }
+        print_plaza(Plaza,LINES);              //after each simulation, display queue via car's print method
     }
 
 
