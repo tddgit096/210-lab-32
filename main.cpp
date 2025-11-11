@@ -25,7 +25,7 @@ const int PAYPROBABILITY = 46, JOINPROBABILITY = 39, JOINPROBEMPTY = 50;
 
 void print_plaza(deque<Car>[],int);
 void print_deque(deque<Car>);
-int find_best_lane(deque<Car>[],int);//returns the lane with the least cars
+int find_best_lane(deque<Car>[],int, int);//returns the lane with the least cars
 
 int main(){
     srand(time(NULL));
@@ -65,14 +65,14 @@ int main(){
                 Plaza[i].back().print();
             }
             else{
-                int linesize[LINES];
-                for(int z=0;z<LINES;z++){
-                    linesizePlaza[z].size();
-                }
-                //find the least clogged line.
+                cout<<"Switched lane: ";   
+                Plaza[i].back().print();
+                Car C = Plaza[i].back();                               //duplicate the car
+                Plaza[i].pop_back();                                    //remove it from the initial list
+                Plaza[find_best_lane(Plaza,LINES,i)].push_back(C);    //find the least clogged line, then push it back.
             }
         }
-        print_plaza(Plaza,LINES);              //after each simulation, display queue via car's print method
+        print_plaza(Plaza,LINES);                //after each simulation, display queue via car's print method
     }
 
 
@@ -118,7 +118,16 @@ void print_deque(deque<Car> D){
     }
 }
 
-int find_best_lane(deque<Car>P[],int size){//returns the lane with the least cars
-    for(int i=0;i<)
-
+int find_best_lane(deque<Car>P[],int size,int initial){//returns the lane with the least cars
+    int minValue = P[initial].size();
+    int minIndex = initial;
+    for(int i=0;i<size;i++){
+        if(i=initial)
+            continue;
+        if(minValue>P[i].size()){
+            minValue=P[i].size();
+            minIndex = i;
+        }
+    }
+    return minIndex;
 }
